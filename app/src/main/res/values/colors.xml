@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#4952b9</color>
+    <color name="colorPrimaryDark">#4952b9</color>
+    <color name="colorAccent">#4c79ff</color>
+
+    <color name="purple">#4952b9</color>
+    <color name="yellow">#ffb259</color>
+    <color name="red">#ff5959</color>
+    <color name="purpleContent">#9059ff</color>
+    <color name="blue">#4cb5ff</color>
+    <color name="green">#4cd97b</color>
+    <color name="tabColor">#4c79ff</color>
+    <color name="whiteColor">#fff</color>
+    <color name="smokeWhite">#f5f5f5</color>
+    <color name="blackColor">#000</color>
+    <color name="darkTextColor">#212121</color>
+    <color name="lightTextColor">#797979</color>
+
+
+
 </resources>
