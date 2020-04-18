@@ -1,4 +1,4 @@
-package com.meksconway.covid.di
+package com.meksconway.covid.di.module
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module

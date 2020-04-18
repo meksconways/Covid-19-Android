@@ -1,6 +1,5 @@
 package com.meksconway.covid.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.meksconway.covid.R
@@ -12,9 +11,10 @@ import com.trendyol.medusalib.navigator.MultipleStackNavigator
 import com.trendyol.medusalib.navigator.Navigator
 import com.trendyol.medusalib.navigator.NavigatorConfiguration
 import com.trendyol.medusalib.navigator.transaction.NavigatorTransaction
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), Navigator.NavigatorListener {
+class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
 
     private val rootFragmentProvider: List<() -> Fragment> = listOf(
         { HomeFragment() },

@@ -19,6 +19,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         app:itemHorizontalTranslationEnabled="false"
         app:itemIconSize="28dp"
         app:itemIconTint="@color/bottom_nav_tint"
