@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.home.HomeFragment">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="24sp"
+            android:textColor="@color/whiteColor"
+            android:textStyle="bold"
+            android:text="Covid-19"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|end"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            app:cornerRadius="20dp"
+            app:iconGravity="end"
+            app:backgroundTint="@color/whiteColor"
+            android:textAllCaps="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            app:icon="@drawable/ic_arrow_drop_down"
+            android:text="Türkiye"
+            android:textStyle="bold"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            />
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvHome"
+        />
+
+
+</LinearLayout>

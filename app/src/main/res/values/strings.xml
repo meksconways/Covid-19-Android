@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Covid-19-Android</string>
+    <string name="home_desc">If you feel sick any of covid-19 symptoms please call or SMS us immediately for help.</string>
+    <string name="prevention">Alınacak Önlemler</string>
 </resources>
