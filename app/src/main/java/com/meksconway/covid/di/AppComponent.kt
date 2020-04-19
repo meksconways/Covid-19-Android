@@ -2,10 +2,8 @@ package com.meksconway.covid.di
 
 import android.app.Application
 import com.meksconway.covid.base.CovidApp
-import com.meksconway.covid.di.module.ActivityBuilderModule
-import com.meksconway.covid.di.module.FragmentBuilderModule
-import com.meksconway.covid.di.module.RepositoryModule
-import com.meksconway.covid.viewmodel.ViewModelModule
+import com.meksconway.covid.di.module.*
+import com.meksconway.covid.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -18,13 +16,15 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ViewModelModule::class,
         RepositoryModule::class,
+        NetworkModule::class,
         ActivityBuilderModule::class,
-        FragmentBuilderModule::class
+        FragmentBuilderModule::class,
+        DataSourceModule::class,
+        AppModule::class
     ]
 )
 interface AppComponent : AndroidInjector<CovidApp> {
 
-//    override fun inject(instance: CovidApp?)
 
     @Component.Builder
     interface Builder {

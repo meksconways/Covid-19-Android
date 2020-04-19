@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.meksconway.covid.ui.activity.MainActivity
 import com.meksconway.covid.viewmodel.BaseViewModel
 import com.meksconway.covid.viewmodel.Input
 import com.meksconway.covid.viewmodel.Output
 import com.meksconway.covid.viewmodel.ViewModelFactory
 import com.trendyol.medusalib.navigator.MultipleStackNavigator
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -20,16 +22,12 @@ import javax.inject.Inject
 abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : DaggerFragment() {
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var factory: ViewModelProvider.Factory
     abstract val viewModel: VM?
     abstract val layRes: Int
     var navigator: MultipleStackNavigator? = null
-//    private val mainVM: MainAcitivityViewModel by activityViewModels {
-//        factory
-//    }
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
         initStackNavigator(context)
     }

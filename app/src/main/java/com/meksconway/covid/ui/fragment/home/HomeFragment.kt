@@ -1,16 +1,14 @@
 package com.meksconway.covid.ui.fragment.home
 
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.meksconway.covid.R
 import com.meksconway.covid.base.BaseFragment
 import com.meksconway.covid.data.model.homecontent.HomeContent
 import com.meksconway.covid.data.model.homecontent.HomeContentType
 import com.meksconway.covid.ui.adapter.HomeContentAdapter
 import com.meksconway.covid.util.MarginItemDecoration
-import com.meksconway.covid.util.dp
+import com.meksconway.covid.util.injectViewModel
 import com.meksconway.covid.util.px
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -20,9 +18,8 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         fun newInstance() = HomeFragment()
     }
 
-    override val viewModel: HomeViewModel by viewModels {
-        factory
-    }
+    override val viewModel: HomeViewModel?
+        get() = injectViewModel(factory)
 
     private val adapter: HomeContentAdapter by lazy {
         HomeContentAdapter()
@@ -62,6 +59,8 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
             adapter.setItems(list)
         }
     }
+
+
 
 
 }
