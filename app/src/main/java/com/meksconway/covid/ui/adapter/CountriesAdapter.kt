@@ -5,19 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding3.view.clicks
 import com.meksconway.covid.R
+import com.meksconway.covid.common.extensions.autoNotify
 import com.meksconway.covid.data.model.summary.Countries
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
+import kotlin.properties.ObservableProperty
 
-class CountriesAdapter(private val callback: (Countries) -> Unit) :
-    RecyclerView.Adapter<CountriesAdapter.CountriesVH>() {
+class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.CountriesVH>() {
 
-    private val contentList = arrayListOf<Countries>()
-
-    fun setItems(list: List<Countries>) {
-        contentList.clear()
-        contentList.addAll(list)
-        notifyDataSetChanged()
+//    private val contentList = arrayListOf<Countries>()
+    var contentList: List<Countries> by Delegates.observable(emptyList()) { _, oldList, newList ->
+        autoNotify(oldList, newList) { o, n -> o.countryCode == n.countryCode }
     }
+    private val callbackSubject = PublishSubject.create<Countries>()
+    fun getCallbackSubject(): Observable<Countries> = callbackSubject
+
+//    fun setItems(list: List<Countries>) {
+//        contentList.clear()
+//        contentList.addAll(list)
+//        notifyDataSetChanged()
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountriesVH {
         val view = LayoutInflater.from(parent.context)
@@ -29,9 +40,13 @@ class CountriesAdapter(private val callback: (Countries) -> Unit) :
 
     override fun onBindViewHolder(holder: CountriesVH, position: Int) {
         holder.bind(contentList[position])
-        holder.itemView.setOnClickListener {
-            callback.invoke(contentList[position])
-        }
+        holder.itemView.clicks()
+            .throttleFirst(4, TimeUnit.SECONDS)
+            .map {
+                contentList[position]
+            }
+            .subscribe(callbackSubject)
+
     }
 
     inner class CountriesVH(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.meksconway.covid.common.extensions.injectSharedViewModel
+import com.meksconway.covid.data.model.UIConfig
 import com.meksconway.covid.ui.activity.MainActivity
+import com.meksconway.covid.ui.activity.MainVM
 import com.meksconway.covid.viewmodel.BaseViewModel
 import com.meksconway.covid.viewmodel.Input
 import com.meksconway.covid.viewmodel.Output
@@ -23,6 +26,12 @@ abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : D
     abstract val layRes: Int
     var navigator: MultipleStackNavigator? = null
     val compositeDisposable = CompositeDisposable()
+    abstract val currentUIConfig: UIConfig
+    private var mainVM: MainVM? = null
+
+    fun updateUIConfig(uiConfig: UIConfig) {
+        mainVM?.input?.setUIConfig(uiConfig)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,6 +56,8 @@ abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : D
         super.onActivityCreated(savedInstanceState)
         initStackNavigator(context)
         setHasOptionsMenu(true)
+        mainVM = injectSharedViewModel()
+        mainVM?.input?.setUIConfig(currentUIConfig)
         viewDidLoad()
         observeViewModel(viewModel?.output)
 

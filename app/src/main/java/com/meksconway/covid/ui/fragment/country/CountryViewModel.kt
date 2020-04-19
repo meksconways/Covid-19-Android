@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 interface CountryViewModelInput : Input {
     fun selectedCountry(country: String)
+
 }
 
 interface CountryViewModelOutput : Output {
@@ -31,10 +32,8 @@ class CountryViewModel @Inject constructor(
     override val output: CountryViewModelOutput
         get() = this
 
-
     override val countryDataOutput: LiveData<Resource<List<Countries>>>
         get() = repository.getCountries()
-
 
     private val _selectedCountryOutput = MutableLiveData<String>(UserInfo.selectedCountry)
     override val selectedCountryOutput: LiveData<String>
@@ -44,6 +43,8 @@ class CountryViewModel @Inject constructor(
     override fun selectedCountry(country: String) {
         _selectedCountryOutput.value = country.apply { UserInfo.selectedCountry = this }
     }
+
+
 
 
 }

@@ -124,5 +124,8 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$paging_version"
     testImplementation "androidx.paging:paging-common:$paging_version"
 
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
+    implementation 'com.github.Ferfalk:SimpleSearchView:0.1.5'
+
 
 }

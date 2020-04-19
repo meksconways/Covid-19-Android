@@ -1,8 +1,12 @@
 package com.meksconway.covid.ui.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.meksconway.covid.R
+import com.meksconway.covid.common.extensions.*
 import com.meksconway.covid.enums.BottomNavigationViewTabs.*
 import com.meksconway.covid.ui.fragment.home.HomeFragment
 import com.meksconway.covid.ui.fragment.info.InfoFragment
@@ -14,6 +18,7 @@ import com.trendyol.medusalib.navigator.NavigatorConfiguration
 import com.trendyol.medusalib.navigator.transaction.NavigatorTransaction
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
 
@@ -23,6 +28,8 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
         { NewsFragment() },
         { InfoFragment() }
     )
+
+    private var currentTabId: Int = HOME.ordinal
 
     val multipleStackNavigator: MultipleStackNavigator =
         MultipleStackNavigator(
@@ -36,10 +43,18 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
             )
         )
 
+    private var viewModel: MainVM? = null
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         multipleStackNavigator.initialize(savedInstanceState)
+        setSupportActionBar(toolbar)
+        viewModel = injectViewModel()
+        observeVM(viewModel?.output)
+
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.tab_home -> {
@@ -62,6 +77,39 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
             false
         }
 
+    }
+
+    private fun observeVM(output: MainVMOutput?) {
+        output?.uiConfigOutput?.observe(this, Observer {
+            if (it?.toolbarVisibility == true) {
+                toolbar.visible()
+                toolbarContainer.visible()
+            } else {
+                toolbarContainer.gone()
+                toolbar.gone()
+            }
+
+            toolbar?.title = it?.toolbarTitle
+            toolbar?.subtitle = it?.subTitle
+
+            if (it?.bottomNavBarVisibility == true) {
+                bottomNav.visible()
+            } else {
+                bottomNav.gone()
+            }
+            val isRootFragment = multipleStackNavigator.hasOnlyRoot(currentTabId)
+            supportActionBar?.setHomeButtonEnabled(!isRootFragment)
+            supportActionBar?.setDisplayHomeAsUpEnabled(!isRootFragment)
+            if (!isRootFragment) {
+                toolbar?.navigationIcon = drawable(R.drawable.ic_back)
+            } else {
+                toolbar?.navigationIcon = null
+            }
+
+        })
+        output?.currentTabOrdinal?.observe(this, Observer {
+            currentTabId = it
+        })
 
     }
 
@@ -73,6 +121,14 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onTabChanged(tabIndex: Int) {
         when (tabIndex) {
             HOME.ordinal -> bottomNav.selectedItemId = R.id.tab_home
@@ -80,6 +136,11 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
             NEWS.ordinal -> bottomNav.selectedItemId = R.id.tab_news
             INFO.ordinal -> bottomNav.selectedItemId = R.id.tab_info
         }
+    }
+
+    override fun onDestroy() {
+        hideKeyboard()
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
