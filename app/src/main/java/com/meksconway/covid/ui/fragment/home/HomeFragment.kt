@@ -7,8 +7,10 @@ import com.meksconway.covid.R
 import com.meksconway.covid.base.BaseFragment
 import com.meksconway.covid.common.HomeFragmentRecyclerViewItemDecoration
 import com.meksconway.covid.common.extensions.addTo
+import com.meksconway.covid.common.extensions.injectSharedViewModel
 import com.meksconway.covid.common.extensions.injectViewModel
 import com.meksconway.covid.common.extensions.px
+import com.meksconway.covid.data.model.UIConfig
 import com.meksconway.covid.data.model.homecontent.HomeContent
 import com.meksconway.covid.data.model.homecontent.HomeContentType
 import com.meksconway.covid.ui.adapter.HomeContentAdapter
@@ -22,6 +24,9 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
     companion object {
         fun newInstance() = HomeFragment()
     }
+
+    override val currentUIConfig: UIConfig
+        get() = UIConfig()
 
     override val viewModel: HomeViewModel?
         get() = injectViewModel(factory)
@@ -37,7 +42,7 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
 
     override fun viewDidLoad() {
         super.viewDidLoad()
-        countryVM = injectViewModel(factory, true)
+        countryVM = injectSharedViewModel(factory)
         rvHome?.adapter = adapter
         rvHome?.addItemDecoration(HomeFragmentRecyclerViewItemDecoration(12.px))
 
@@ -58,7 +63,6 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         output?.navigateCountrySelectOutput?.observe(viewLifecycleOwner, Observer {
             navigator?.start(CountryFragment())
         })
-
         countryVM?.output?.selectedCountryOutput?.observe(viewLifecycleOwner, Observer {
             btnCountry?.text = it
         })
@@ -82,6 +86,8 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
             adapter.setItems(list)
         }
     }
+
+
 
 
 }

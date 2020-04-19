@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/smokeWhite"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
     tools:context=".ui.fragment.country.CountryFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="wrap_content"
+        android:id="@+id/suggestionView"
+        android:background="@color/whiteColor"
+        android:visibility="gone"
+        android:foreground="?attr/selectableItemBackground"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/btnBack"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:drawableStart="@drawable/ic_back"
-            android:drawablePadding="16dp"
-            android:textColor="@color/whiteColor"
+            android:text="@string/turkey"
+            android:padding="16dp"
+            android:textColor="@color/darkTextColor"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:text="Ülkeler"
             />
-
 
     </FrameLayout>
 
-
     <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/rvCountries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:shimmer_demo_angle="20"
-        app:shimmer_demo_layout="@layout/shimmer_countries"
+        android:splitMotionEvents="false"
         android:clipToPadding="false"
-        android:id="@+id/rvCountries"
-        />
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_layout="@layout/shimmer_countries" />
+
 
 </LinearLayout>

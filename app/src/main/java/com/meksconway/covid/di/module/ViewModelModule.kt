@@ -3,6 +3,7 @@ package com.meksconway.covid.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.meksconway.covid.di.annotations.ViewModelKey
+import com.meksconway.covid.ui.activity.MainVM
 import com.meksconway.covid.ui.fragment.country.CountryViewModel
 import com.meksconway.covid.ui.fragment.home.HomeViewModel
 import com.meksconway.covid.viewmodel.ViewModelFactory
@@ -25,6 +26,5 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CountryViewModel::class)
     abstract fun bindCountryViewModel(viewModel: CountryViewModel): ViewModel
-
 
 }
