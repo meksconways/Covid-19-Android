@@ -2,7 +2,7 @@ package com.meksconway.covid.di.module
 
 import android.app.Application
 import android.content.Context
-import com.meksconway.covid.di.CoroutineScopeIO
+import com.meksconway.covid.di.annotations.CoroutineScopeIO
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineScope

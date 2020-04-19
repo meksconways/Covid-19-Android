@@ -1,4 +1,4 @@
-package com.meksconway.covid.di
+package com.meksconway.covid.di.component
 
 import android.app.Application
 import com.meksconway.covid.base.CovidApp

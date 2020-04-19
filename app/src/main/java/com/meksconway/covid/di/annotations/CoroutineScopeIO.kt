@@ -1,4 +1,4 @@
-package com.meksconway.covid.di
+package com.meksconway.covid.di.annotations
 
 import javax.inject.Qualifier
 

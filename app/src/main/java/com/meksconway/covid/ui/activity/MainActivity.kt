@@ -3,6 +3,7 @@ package com.meksconway.covid.ui.activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.meksconway.covid.R
+import com.meksconway.covid.enums.BottomNavigationViewTabs.*
 import com.meksconway.covid.ui.fragment.home.HomeFragment
 import com.meksconway.covid.ui.fragment.info.InfoFragment
 import com.meksconway.covid.ui.fragment.news.NewsFragment
@@ -30,7 +31,7 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
             rootFragmentProvider,
             navigatorListener = this,
             navigatorConfiguration = NavigatorConfiguration(
-                0,
+                HOME.ordinal,
                 true, NavigatorTransaction.ATTACH_DETACH
             )
         )
@@ -42,19 +43,19 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.tab_home -> {
-                    multipleStackNavigator.switchTab(0)
+                    multipleStackNavigator.switchTab(HOME.ordinal)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.tab_statics -> {
-                    multipleStackNavigator.switchTab(1)
+                    multipleStackNavigator.switchTab(STATISTICS.ordinal)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.tab_news -> {
-                    multipleStackNavigator.switchTab(2)
+                    multipleStackNavigator.switchTab(NEWS.ordinal)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.tab_info -> {
-                    multipleStackNavigator.switchTab(3)
+                    multipleStackNavigator.switchTab(INFO.ordinal)
                     return@setOnNavigationItemSelectedListener true
                 }
             }
@@ -74,10 +75,10 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
 
     override fun onTabChanged(tabIndex: Int) {
         when (tabIndex) {
-            0 -> bottomNav.selectedItemId = R.id.tab_home
-            1 -> bottomNav.selectedItemId = R.id.tab_statics
-            2 -> bottomNav.selectedItemId = R.id.tab_news
-            3 -> bottomNav.selectedItemId = R.id.tab_info
+            HOME.ordinal -> bottomNav.selectedItemId = R.id.tab_home
+            STATISTICS.ordinal -> bottomNav.selectedItemId = R.id.tab_statics
+            NEWS.ordinal -> bottomNav.selectedItemId = R.id.tab_news
+            INFO.ordinal -> bottomNav.selectedItemId = R.id.tab_info
         }
     }
 

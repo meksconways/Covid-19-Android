@@ -10,13 +10,13 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.button.MaterialButton
 import com.meksconway.covid.R
+import com.meksconway.covid.common.extensions.addViewObserver
+import com.meksconway.covid.common.extensions.px
 import com.meksconway.covid.data.model.homecontent.*
-import com.meksconway.covid.util.px
 
 
 class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -111,13 +111,12 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val btnSendSMS = itemView.findViewById<MaterialButton>(R.id.btnSendSMS)
 
         init {
-            itemView.viewTreeObserver?.addOnGlobalLayoutListener {
+            itemView.addViewObserver {
                 val buttonHeight = btnCall.height
                 btnCall.cornerRadius = buttonHeight / 2
                 btnSendSMS.cornerRadius = buttonHeight / 2
             }
         }
-
 
         fun bind(model: HomeContentHeaderModel) {
             titleText?.text = model.headerText
@@ -142,12 +141,8 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val titleText = itemView.findViewById<TextView>(R.id.txtTitle)
         private val card = itemView.findViewById<View>(R.id.card)
 
-        fun bind(model: PreventionModel) {
-            titleText?.text = model.title
-            lottieView?.setAnimation(model.rawName)
-            lottieView?.playAnimation()
-
-            card.viewTreeObserver.addOnGlobalLayoutListener {
+        init {
+            itemView.addViewObserver {
                 val height = card.height
                 val drawable = GradientDrawable()
                 drawable.cornerRadius = (height / 2).toFloat()
@@ -157,6 +152,15 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 )
                 card.background = drawable
             }
+
+        }
+
+        fun bind(model: PreventionModel) {
+            titleText?.text = model.title
+            lottieView?.setAnimation(model.rawName)
+            lottieView?.playAnimation()
+
+
 
 
         }
@@ -169,23 +173,32 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val contentText = itemView.findViewById<TextView>(R.id.txtContent)
         private val card = itemView.findViewById<FrameLayout>(R.id.cardView)
 
-        fun bind(model: YourOwnTestModel) {
-            titleText?.text = model.titleText
-            contentText?.text = model.contentText
+        init {
             val gradientDrawable = GradientDrawable()
-            gradientDrawable.orientation =  GradientDrawable.Orientation.TL_BR
+            gradientDrawable.orientation = GradientDrawable.Orientation.TL_BR
             gradientDrawable.cornerRadius = 16.px.toFloat()
             gradientDrawable.colors = intArrayOf(
-                ContextCompat.getColor(card.context,R.color.purpleLight),
-                ContextCompat.getColor(card.context,R.color.purpleMiddle),
-                ContextCompat.getColor(card.context,R.color.colorPrimary)
+                ContextCompat.getColor(card.context, R.color.purpleLight),
+                ContextCompat.getColor(card.context, R.color.purpleMiddle),
+                ContextCompat.getColor(card.context, R.color.colorPrimary)
             )
 
-            val alphaColor = ColorUtils.setAlphaComponent(ContextCompat.getColor(card.context,R.color.purpleLight), 120)
+            val alphaColor = ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(
+                    card.context,
+                    R.color.purpleLight
+                ), 120
+            )
             val list = ColorStateList(arrayOf(intArrayOf()), intArrayOf(alphaColor))
             val rippleDrawable = RippleDrawable(list, gradientDrawable, null)
 
             card.background = rippleDrawable
+        }
+
+        fun bind(model: YourOwnTestModel) {
+            titleText?.text = model.titleText
+            contentText?.text = model.contentText
+
 
 
         }
