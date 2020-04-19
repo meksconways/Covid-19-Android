@@ -1,7 +1,7 @@
 package com.meksconway.covid.base
 
 import com.chibatching.kotpref.Kotpref
-import com.meksconway.covid.di.DaggerAppComponent
+import com.meksconway.covid.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
